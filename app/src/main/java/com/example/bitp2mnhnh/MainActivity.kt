@@ -19,10 +19,11 @@ class MainActivity : AppCompatActivity() {
         val edtInput = findViewById<EditText>(R.id.edtInput)
         val btnGoSecond = findViewById<Button>(R.id.btnGoSecond)
 
-        // Intent chuyển sang màn hình 2
         btnGoSecond.setOnClickListener {
             val intent = Intent(this, SecondActivity::class.java)
-            intent.putExtra("KEY_TEXT", edtInput.text.toString())
+            val bundle = Bundle()
+            bundle.putString("KEY_TEXT", edtInput.text.toString())
+            intent.putExtras(bundle)
             startActivity(intent)
         }
     }
@@ -31,7 +32,8 @@ class MainActivity : AppCompatActivity() {
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
         setIntent(intent)
-        val reply = intent.getStringExtra("KEY_REPLY")
+        val bundle = intent.extras
+        val reply = bundle?.getString("KEY_REPLY")
         if (reply != null) {
             tvMessage.text = reply
         }
