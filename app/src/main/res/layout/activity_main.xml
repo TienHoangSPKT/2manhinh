@@ -6,6 +6,7 @@
               android:gravity="center"
               android:padding="24dp">
 
+
     <TextView
             android:id="@+id/tvTitle1"
             android:layout_width="wrap_content"

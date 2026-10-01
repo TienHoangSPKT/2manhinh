@@ -10,7 +10,6 @@
             android:label="Bài Tập 2 màn hình"
             android:supportsRtl="true"
             android:theme="@style/Theme.BàiTập2MànHình">
-
         <activity
                 android:name=".MainActivity"
                 android:exported="true">
