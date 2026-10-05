@@ -6,17 +6,17 @@
               android:gravity="center"
               android:padding="24dp">
 
-    <TextView
-            android:id="@+id/tvProfileName"
-            android:layout_width="wrap_content"
+    <EditText
+            android:id="@+id/edtName"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Họ tên: Chưa có thông tin"
-            android:textSize="22sp" />
+            android:hint="Nhập họ tên"
+            android:inputType="textPersonName" />
 
     <Button
-            android:id="@+id/btnEdit"
+            android:id="@+id/btnSave"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:text="Chỉnh sửa thông tin" />
+            android:text="Lưu &amp; Quay lại" />
 </LinearLayout>

@@ -7,7 +7,7 @@
             android:dataExtractionRules="@xml/data_extraction_rules"
             android:fullBackupContent="@xml/backup_rules"
             android:icon="@android:drawable/sym_def_app_icon"
-            android:label="Bài Tập 2 màn hình"
+            android:label="Quản lý hồ sơ"
             android:supportsRtl="true"
             android:theme="@style/Theme.BàiTập2MànHình">
         <activity
@@ -20,7 +20,7 @@
         </activity>
 
         <activity
-                android:name=".SecondActivity"
+                android:name=".EditActivity"
                 android:exported="false" />
     </application>
 

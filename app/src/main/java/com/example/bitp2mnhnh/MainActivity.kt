@@ -1,40 +1,55 @@
 package com.example.bitp2mnhnh
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
-import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var tvMessage: TextView
+    private lateinit var tvProfileName: TextView
+    private var currentName = "Chưa có thông tin"
+
+    // Bước 1: đăng ký Launcher ở mức thuộc tính class
+    private val editLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        // Bước 4: nhận kết quả trả về
+        if (result.resultCode == Activity.RESULT_OK) {
+            val newName = result.data?.getStringExtra("KEY_NAME") ?: ""
+            if (newName.isNotBlank()) {
+                currentName = newName
+                tvProfileName.text = "Họ tên: $currentName"
+                Toast.makeText(this, "Cập nhật thành công!", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        tvMessage = findViewById(R.id.tvMessage)
-        val edtInput = findViewById<EditText>(R.id.edtInput)
-        val btnGoSecond = findViewById<Button>(R.id.btnGoSecond)
+        tvProfileName = findViewById(R.id.tvProfileName)
 
-        btnGoSecond.setOnClickListener {
-            val intent = Intent(this, SecondActivity::class.java)
-            val bundle = Bundle()
-            bundle.putString("KEY_TEXT", edtInput.text.toString())
-            intent.putExtras(bundle)
-            startActivity(intent)
+        // Khôi phục khi xoay màn hình
+        currentName = savedInstanceState?.getString("SAVED_NAME") ?: currentName
+        tvProfileName.text = "Họ tên: $currentName"
+
+        // Bước 2: bấm nút -> gửi tên hiện tại và mở EditActivity
+        findViewById<Button>(R.id.btnEdit).setOnClickListener {
+            val intent = Intent(this, EditActivity::class.java).apply {
+                putExtra("KEY_NAME", currentName)
+            }
+            editLauncher.launch(intent)
         }
     }
 
-    // Nhận Intent quay lại từ màn hình 2
-    override fun onNewIntent(intent: Intent) {
-        super.onNewIntent(intent)
-        setIntent(intent)
-        val bundle = intent.extras
-        val reply = bundle?.getString("KEY_REPLY")
-        if (reply != null) {
-            tvMessage.text = reply
-        }
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString("SAVED_NAME", currentName)
     }
 }
